@@ -1,0 +1,13 @@
+# IMPORTANT: Reset this value with a secret only you know.
+# python3 -c 'import secrets; print(secrets.token_hex())'
+SECRET_KEY="dev"
+
+# SQLAlchemy configuration (don't change)
+SQLALCHEMY_DATABASE_URI="sqlite:///../instance/trace.db"
+SQLALCHEMY_TRACK_MODIFICATIONS=false
+
+ADMIN_PASSWORD="abc"
+
+EVENT_DATE="2021-12-16"
+
+INFOS="At my place, come at 16h, bring booze."

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" class="h-100">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Opengraph social media preview -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="2GPlus" />
+    <meta property="og:description" content="Tracing service for private gatherings." />
+    <meta property="og:image" content="https://covid.paulhoeller.at/static/sozial_logo.png" />
+
+    <link rel="shortcut icon" href="/static/icon_logo.png" type="image/png">
+
+
+    <!-- Bootstrap CSS -->
+    <link href="static/bootstrap-primer-dark.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="static/style.css">
+
+    <title>2GPlus</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+    <main class="flex-shrink-0 mb-3">
+        <div style="width: 100%; display: flex; justify-content: center;">
+            <a href="/">
+                <img class="mt-5" src="/static/logo.png" alt="" style="max-width: 150px; width:60vw">
+            </a>
+        </div>
+        <div class="container-sm mt-4" style="max-width: 600px;">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+                <span style="white-space:pre-wrap;">{{message}}</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            {% block body %}
+            {% endblock %}
+        </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <span class="text-muted">
+                <a class="text-muted" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Help</a> ·
+                <a class="text-muted" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Datenschutzerklärung</a>
+            </span>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
