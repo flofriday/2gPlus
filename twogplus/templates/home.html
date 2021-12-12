@@ -1,58 +1,70 @@
 {% extends "layout.html" %}
 {% block body %}
-
-{% if user and user.is_tested %}
-<h1>{{user.name}} is tested 👍</h1>
-{% endif %}
-{% if user and user.is_vaccinated %}
-<h1>{{user.name}} is vaccinated 👍</h1>
-{% endif %}
-<br>
-{% if not (user and user.is_tested and user.is_vaccinated)%}
-<h1>Certificate & PCR Test</h1>
-You can only upload images of QR codes or PDFs.
-
-<form action="{{url_for('upload_cert')}}" method="post" enctype="multipart/form-data" class="mb-5">
-    {% if not (user and user.is_vaccinated)%}
-    <div class="mb-3 mt-2">
-        Vaccination Certificate:
-        <input class="form-control" type="file" name="vaccineFile" id="vaccineFile" onchange="enableForm()">
-    </div>
+{% if user %}
+{% if user.is_vaccinated and user.is_tested %}
+<div class="entryItem bg-success rounded mb-3 mt-2">
     {% else %}
-    <input class="form-control" type="file" name="vaccineFile" id="vaccineFile" style="display: none;"
-        onchange="enableForm()">
-    {% endif %}
-    {% if not (user and user.is_tested)%}
-    <div class="mb-3 mt-2">
-        PCR Test:
-        <input class="form-control" type="file" name="testFile" id="testFile" onchange="enableForm()">
+    <div class="entryItem bg-warning rounded mb-3 mt-2">
+        {% endif %}
+        {% if user.is_tested and user.is_vaccinated%}
+        <h2>{{user.name}}<br>is vaccinated and tested 👍</h2>
+        {% else %}
+        {% if user.is_tested %}
+        <h2>{{user.name}} is tested 👍</h2>
+        {% endif %}
+        {% if user.is_vaccinated %}
+        <h2> {{user.name}} is vaccinated 👍</h2>
+        {% endif %}
+        {% endif %}
+        <br>
     </div>
-    {% else %}
-    <input class="form-control" type="file" name="testFile" id="testFile" style="display: none;"
-        onchange="enableForm()">
     {% endif %}
-    <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="checkStorage" onchange="enableForm()">
-        <label class="form-check-label" for="exampleCheck1">I agree that the <a
-                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">DSGVO</a> sucks and I don't care about pauls server
-            extracting the dates from my qr codes.
-        </label>
-    </div>
-    <input class="btn btn-primary w-100" type=submit id="submit" value=Upload disabled>
-</form>
+    {% if not (user and user.is_tested and user.is_vaccinated)%}
+    <h1>Certificate & PCR Test</h1>
+    You can only upload images of QR codes or PDFs.
 
-<script>
-    const vaccineFileEl = document.getElementById("vaccineFile");
-    const testFileEl = document.getElementById("testFile");
-    const checkEl = document.getElementById("checkStorage");
-    const submitEl = document.getElementById("submit");
-    function enableForm() {
-        if (checkEl.checked && (testFileEl.files.length != 0 || vaccineFileEl.files.length != 0)) {
-            submitEl.disabled = false;
-        } else {
-            submitEl.disabled = true;
+    <form action="{{url_for('upload_cert')}}" method="post" enctype="multipart/form-data" class="mb-5">
+        {% if not (user and user.is_vaccinated)%}
+        <div class="mb-3 mt-2">
+            Vaccination Certificate:
+            <input class="form-control" type="file" name="vaccineFile" id="vaccineFile" onchange="enableForm()">
+        </div>
+        {% else %}
+        <input class="form-control" type="file" name="vaccineFile" id="vaccineFile" style="display: none;"
+            onchange="enableForm()">
+        {% endif %}
+        {% if not (user and user.is_tested)%}
+        <div class="mb-3 mt-2">
+            PCR Test:
+            <input class="form-control" type="file" name="testFile" id="testFile" onchange="enableForm()">
+        </div>
+        {% else %}
+        <input class="form-control" type="file" name="testFile" id="testFile" style="display: none;"
+            onchange="enableForm()">
+        {% endif %}
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="checkStorage" onchange="enableForm()">
+            <label class="form-check-label" for="exampleCheck1">I agree that the <a
+                    href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">DSGVO</a> sucks and I don't care about pauls
+                server
+                extracting the dates from my qr codes.
+            </label>
+        </div>
+        <input class="btn btn-primary w-100" type=submit id="submit" value=Upload disabled>
+    </form>
+
+    <script>
+        const vaccineFileEl = document.getElementById("vaccineFile");
+        const testFileEl = document.getElementById("testFile");
+        const checkEl = document.getElementById("checkStorage");
+        const submitEl = document.getElementById("submit");
+        function enableForm() {
+            if (checkEl.checked && (testFileEl.files.length != 0 || vaccineFileEl.files.length != 0)) {
+                submitEl.disabled = false;
+            } else {
+                submitEl.disabled = true;
+            }
         }
-    }
-</script>
-{% endif %}
-{% endblock %}
+    </script>
+    {% endif %}
+    {% endblock %}
