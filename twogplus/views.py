@@ -15,8 +15,7 @@ from twogplus.models import User
 def home():
     if "username" not in session:
         return render_template("home.html", user=None)
-
-    user = User.query.filter(User.name == session["username"])
+    user = User.query.filter(User.name == session["username"]).first()
     return render_template("home.html", user=user)
 
 
@@ -46,7 +45,7 @@ def upload_cert():
         else:
             message = str(e)
         flash(message, "danger")
-        return render_template("home.html")
+        return home()
 
     is_tested = test_username is not None
     is_vaccinated = vaccine_username is not None
@@ -60,17 +59,33 @@ def upload_cert():
         )
         return render_template("home.html")
 
-    # TODO If a user with the name already exist we should only update it
     username = vaccine_username if is_vaccinated else test_username
-    user = User(username, is_vaccinated, is_tested)
-    db.session.add(user)
-    db.session.commit()
+    session["username"] = username
 
-    # TODO set some cookies or shit
+    user_found = User.query.filter(User.name == username).first()
+    if user_found:
+        user = user_found
+        if is_vaccinated:
+            db.session.query(User).filter(User.name == username).update(
+                {"is_vaccinated": is_vaccinated}
+            )
+            db.session.commit()
+        if is_tested:
+            db.session.query(User).filter(User.name == username).update(
+                {"is_tested": is_tested}
+            )
+            db.session.commit()
 
-    # TODO: propper message here
+    else:
+        user = User(username, is_vaccinated, is_tested)
+        db.session.add(user)
+        db.session.commit()
+
+    message_vaccinated = "a valid vaccination certificate" if is_vaccinated else ""
+    message_and = " and " if is_vaccinated and is_tested else ""
+    message_tested = "a valid test" if is_tested else ""
     flash(
-        "Successfully uploaded some? certificate(s) 🤷‍♀️ ",
+        f"Successfully uploaded {message_vaccinated}{message_and}{message_tested} 😀",
         "success",
     )
     return render_template("home.html", user=user)

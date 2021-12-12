@@ -20,3 +20,55 @@ This launces a simple webserver which can only be accessed from the localhost.
 
 **Note:** Don't use this server in production, it is insecure and low
 performance.
+
+## Deployment
+
+How we deploy this app on Ubuntu.
+
+Set the correct timezone with (e.g. Europe/Vienna):
+
+```bash
+sudo timedatectl set-timezone TIMEZONE
+```
+
+Install the requirements with:
+
+```bash
+sudo apt -y install python3-venv python3-pip libzbar0 libxml2-dev libxmlsec1-dev libxmlsec1-openssl poppler-utils
+```
+
+Create a virtual env with:
+
+```bash
+python3 -m venv venv
+```
+
+Copy `instance/config_example.toml` to `instance/config.toml` and edit all
+the fields in it.
+
+Open `twogplus.service` and edit the username and all paths to the working
+directory.
+
+Start the systemd service with:
+
+```bash
+sudo cp twogplus.service /etc/systemd/system
+sudo systemctl daemon-reload
+sudo systemctl enable twogplus.service
+sudo systemctl start twogplus.service
+```
+
+The service should now be up and running 🎉
+
+To stop the service run:
+
+```bash
+sudo systemctl stop twogplus.service
+```
+
+To update the service to a new version (commit) run:
+
+```bash
+git pull
+sudo systemctl restart twogplus.service
+```

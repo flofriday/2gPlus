@@ -4,3 +4,19 @@
 .tab-link:hover {
   text-decoration: underline;
 }
+.entryItem{
+  animation: entryAnimation 2s ease 0s infinite normal forwards;
+}
+@keyframes entryAnimation {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
