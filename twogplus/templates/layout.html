@@ -23,11 +23,11 @@
     <title>2GPlus</title>
 </head>
 
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-100 img-background">
     <main class="flex-shrink-0 mb-3">
         <div style="width: 100%; display: flex; justify-content: center;">
             <a href="/">
-                <img class="mt-5" src="/static/logo.png" alt="" style="max-width: 150px; width:60vw">
+                <img class="mt-5 logo" src="/static/logo.png" alt="" style="max-width: 150px; width:60vw">
             </a>
         </div>
         <div class="container-sm mt-4" style="max-width: 600px;">
@@ -42,8 +42,15 @@
             {% endif %}
             {% endwith %}
 
-            {% block body %}
-            {% endblock %}
+            <div class="card rounded" style="padding: 24px">
+                <div class="mb-4 text-center">
+                    <h1 class="display-3">{{config['EVENT_NAME']}}</h1>
+                    {{config['EVENT_INFO']}}
+                </div>
+
+                {% block body %}
+                {% endblock %}
+            </div>
         </div>
     </main>
 

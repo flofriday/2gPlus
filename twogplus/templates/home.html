@@ -23,7 +23,7 @@
     <h1>Certificate & PCR Test</h1>
     You can only upload images of QR codes or PDFs.
 
-    <form action="{{url_for('upload_cert')}}" method="post" enctype="multipart/form-data" class="mb-5">
+    <form action="{{url_for('upload_cert')}}" method="post" enctype="multipart/form-data" class="mb-0">
         {% if not (user and user.is_vaccinated)%}
         <div class="mb-3 mt-2">
             Vaccination Certificate:
