@@ -1,6 +1,7 @@
 # 2gPlus
 
 Simple service for enforcing 2g+ rules at private gatherings
+![out](https://user-images.githubusercontent.com/21206831/145721719-e731c3fd-f414-4449-b146-a047b163f795.png)
 
 # Getting started
 
