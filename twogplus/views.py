@@ -123,7 +123,7 @@ def handle_bad_request(e):
 def delete_user():
     db.session.query(User).filter(User.name == session["username"]).delete()
     db.session.commit()
-    session["username"] = None
+    session.clear()
     flash("Deleted cookies and stored data.", "info")
     return redirect(url_for("home"))
 
