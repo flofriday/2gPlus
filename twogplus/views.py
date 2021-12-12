@@ -45,7 +45,7 @@ def upload_cert():
         else:
             message = str(e)
         flash(message, "danger")
-        return render_template("home.html")
+        return home()
 
     is_tested = test_username is not None
     is_vaccinated = vaccine_username is not None
