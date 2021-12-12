@@ -15,8 +15,7 @@ from twogplus.models import User
 def home():
     if "username" not in session:
         return render_template("home.html", user=None)
-
-    user = User.query.filter(User.name == session["username"])
+    user = User.query.filter(User.name == session["username"]).first()
     return render_template("home.html", user=user)
 
 
@@ -62,6 +61,9 @@ def upload_cert():
 
     # TODO If a user with the name already exist we should only update it
     username = vaccine_username if is_vaccinated else test_username
+
+    session["username"] = username
+
     user = User(username, is_vaccinated, is_tested)
     db.session.add(user)
     db.session.commit()
