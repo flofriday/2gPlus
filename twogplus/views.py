@@ -59,16 +59,27 @@ def upload_cert():
         )
         return render_template("home.html")
 
-    # TODO If a user with the name already exist we should only update it
     username = vaccine_username if is_vaccinated else test_username
-
     session["username"] = username
 
-    user = User(username, is_vaccinated, is_tested)
-    db.session.add(user)
-    db.session.commit()
+    user_found = User.query.filter(User.name == username).first()
+    if user_found:
+        user = user_found
+        if is_vaccinated:
+            db.session.query(User).filter(User.name == username).update(
+                {"is_vaccinated": is_vaccinated}
+            )
+            db.session.commit()
+        if is_tested:
+            db.session.query(User).filter(User.name == username).update(
+                {"is_tested": is_tested}
+            )
+            db.session.commit()
 
-    # TODO set some cookies or shit
+    else:
+        user = User(username, is_vaccinated, is_tested)
+        db.session.add(user)
+        db.session.commit()
 
     # TODO: propper message here
     flash(
