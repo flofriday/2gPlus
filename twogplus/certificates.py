@@ -88,7 +88,7 @@ def assert_cert_sign(cose_data: bytes):
             break
     else:
         raise Exception(
-            "Unable validate certificate signature: " f"kid '{required_kid}' not found"
+            f"Unable validate certificate signature: kid '{required_kid}' not found"
         )
     found_cert = cert
 
