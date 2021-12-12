@@ -93,12 +93,14 @@ def upload_cert():
     return render_template("home.html", user=user)
 
 
-# TODO: basic auth
 @app.get("/admin")
 def admin():
+    users = User.query.all()
+    users.sort(key=lambda u: u.name)
     return render_template(
         "admin.html",
         now=datetime.now(),
+        users=users,
     )
 
 
