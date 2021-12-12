@@ -81,7 +81,6 @@ def upload_cert():
         db.session.add(user)
         db.session.commit()
 
-    # TODO: propper message here
     message_vaccinated = "a valid vaccination certificate" if is_vaccinated else ""
     message_and = " and " if is_vaccinated and is_tested else ""
     message_tested = "a valid test" if is_tested else ""
