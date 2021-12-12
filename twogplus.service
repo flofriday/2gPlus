@@ -3,9 +3,9 @@ Description=2GPlus tool for private gatherings
 After=network.target
 
 [Service]
-User=qr-registration
+User=datenkrake
 WorkingDirectory=/home/datenkrake/twogplus
-ExecStart=/bin/bash -c 'source /home/qr-registration/space-trace/venv/bin/activate; gunicorn -w 24 --bind 0.0.0.0:5000 space_trace:app'
+ExecStart=/bin/bash -c 'source /home/datenkrake/twogplus/venv/bin/activate; gunicorn -w 24 --bind 0.0.0.0:5000 twogplus:app'
 Restart=always
 
 [Install]
