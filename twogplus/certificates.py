@@ -88,8 +88,7 @@ def assert_cert_sign(cose_data: bytes):
             break
     else:
         raise Exception(
-            "Unable validate certificate signature: "
-            f"kid '{required_kid}' not found"
+            "Unable validate certificate signature: " f"kid '{required_kid}' not found"
         )
     found_cert = cert
 
@@ -153,9 +152,7 @@ def verify_vaccinated_cert(file: FileStorage) -> str:
     # Verify the exiration date is ok for the event
     event_date = date.fromisoformat(app.config["EVENT_DATE"])
     if calc_vaccinated_till(data) < event_date:
-        raise Exception(
-            f"Your vaccine will expire before the event at {event_date}"
-        )
+        raise Exception(f"Your vaccine will expire before the event at {event_date}")
 
     # Return the name from the certificate
     return data[-260][1]["nam"]["gnt"] + " " + data[-260][1]["nam"]["fnt"]
@@ -205,7 +202,7 @@ def verify_test_cert(file: FileStorage) -> str:
     event_date = datetime.fromisoformat(app.config["EVENT_DATE"])
     event_date += timedelta(hours=(24 + 6))
     time_of_test = datetime.fromisoformat(data[-260][1]["t"][0]["sc"][:-1])
-    if time_of_test + timedelta(hours=4800) < event_date:
+    if time_of_test + timedelta(hours=48) < event_date:
         raise Exception(
             f"Your test will expire before the event at {event_date}\n"
             f"Time of test: {time_of_test}\nValid until: {time_of_test + timedelta(hours=48)}"
