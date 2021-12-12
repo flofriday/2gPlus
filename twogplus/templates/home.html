@@ -7,13 +7,13 @@
     <div class="entryItem bg-warning rounded mb-3 mt-2">
         {% endif %}
         {% if user.is_tested and user.is_vaccinated%}
-        <h2>{{user.name}}<br>is vaccinated and tested 👍</h2>
+        <h2>{{user.get_capitalized_name()}}<br>is vaccinated and tested 👍</h2>
         {% else %}
         {% if user.is_tested %}
-        <h2>{{user.name}} is tested 👍</h2>
+        <h2>{{user.get_capitalized_name()}} is tested 👍</h2>
         {% endif %}
         {% if user.is_vaccinated %}
-        <h2> {{user.name}} is vaccinated 👍</h2>
+        <h2> {{user.get_capitalized_name()}} is vaccinated 👍</h2>
         {% endif %}
         {% endif %}
         <br>
