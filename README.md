@@ -25,6 +25,12 @@ performance.
 
 How we deploy this app on Ubuntu.
 
+Set the correct timezone with (e.g. Europe/Vienna):
+
+```bash
+sudo timedatectl set-timezone TIMEZONE
+```
+
 Install the requirements with:
 
 ```bash
