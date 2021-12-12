@@ -1,17 +1,36 @@
 {% extends "layout.html" %}
 {% block body %}
+
+{% if user and user.is_tested %}
+<h1>{{user.name}} is tested 👍</h1>
+{% endif %}
+{% if user and user.is_vaccinated %}
+<h1>{{user.name}} is vaccinated 👍</h1>
+{% endif %}
+<br>
+{% if not (user and user.is_tested and user.is_vaccinated)%}
 <h1>Certificate & PCR Test</h1>
 You can only upload images of QR codes or PDFs.
 
 <form action="{{url_for('upload_cert')}}" method="post" enctype="multipart/form-data" class="mb-5">
+    {% if not (user and user.is_vaccinated)%}
     <div class="mb-3 mt-2">
         Vaccination Certificate:
         <input class="form-control" type="file" name="vaccineFile" id="vaccineFile" onchange="enableForm()">
     </div>
+    {% else %}
+    <input class="form-control" type="file" name="vaccineFile" id="vaccineFile" style="display: none;"
+        onchange="enableForm()">
+    {% endif %}
+    {% if not (user and user.is_tested)%}
     <div class="mb-3 mt-2">
         PCR Test:
         <input class="form-control" type="file" name="testFile" id="testFile" onchange="enableForm()">
     </div>
+    {% else %}
+    <input class="form-control" type="file" name="testFile" id="testFile" style="display: none;"
+        onchange="enableForm()">
+    {% endif %}
     <div class="mb-3 form-check">
         <input type="checkbox" class="form-check-input" id="checkStorage" onchange="enableForm()">
         <label class="form-check-label" for="exampleCheck1">I agree that the <a
@@ -35,5 +54,5 @@ You can only upload images of QR codes or PDFs.
         }
     }
 </script>
-
+{% endif %}
 {% endblock %}
