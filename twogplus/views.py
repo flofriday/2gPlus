@@ -82,8 +82,11 @@ def upload_cert():
         db.session.commit()
 
     # TODO: propper message here
+    message_vaccinated = "a valid vaccination certificate" if is_vaccinated else ""
+    message_and = " and " if is_vaccinated and is_tested else ""
+    message_tested = "a valid test" if is_tested else ""
     flash(
-        "Successfully uploaded some? certificate(s) 🤷‍♀️ ",
+        f"Successfully uploaded {message_vaccinated}{message_and}{message_tested} 😀",
         "success",
     )
     return render_template("home.html", user=user)
