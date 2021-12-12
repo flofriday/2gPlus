@@ -8,6 +8,6 @@ SQLALCHEMY_TRACK_MODIFICATIONS=false
 
 ADMIN_PASSWORD="abc"
 
+EVENT_NAME="Homeparty 16.12"
 EVENT_DATE="2021-12-16"
-
-INFOS="At my place, come at 16h, bring booze."
+EVENT_INFO="At my place, come at 20:00, bring booze."

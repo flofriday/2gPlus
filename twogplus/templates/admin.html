@@ -2,10 +2,15 @@
 {% block body %}
 <h1>Admin</h1>
 
-<p>
-<h3 class="mt-5">Info for nerds</h3>
+<h3>Users {{users|length}}</h3>
+<ul>
+    {% for user in users %}
+    <li>{{user.name}}</li>
+    {% endfor %}
+</ul>
+
+<h3>Info for nerds</h3>
 The server thinks it is: {{now}}
-</p>
 
 
 {% endblock %}

@@ -3,8 +3,10 @@ from traceback import format_exception
 import traceback
 
 from flask import session, request, flash
+from flask.helpers import url_for
 from flask.templating import render_template
 from werkzeug.exceptions import InternalServerError
+from werkzeug.utils import redirect
 
 from twogplus import app, db
 from twogplus.certificates import verify_test_cert, verify_vaccinated_cert
@@ -91,12 +93,14 @@ def upload_cert():
     return render_template("home.html", user=user)
 
 
-# TODO: basic auth
 @app.get("/admin")
 def admin():
+    users = User.query.all()
+    users.sort(key=lambda u: u.name)
     return render_template(
         "admin.html",
         now=datetime.now(),
+        users=users,
     )
 
 
@@ -115,6 +119,15 @@ def handle_bad_request(e):
         ),
         500,
     )
+
+
+@app.post("/delete-user")
+def delete_user():
+    db.session.query(User).filter(User.name == session["username"]).delete()
+    db.session.commit()
+    session.clear()
+    flash("Deleted cookies and stored data.", "info")
+    return redirect(url_for("home"))
 
 
 @app.get("/crash-now")
