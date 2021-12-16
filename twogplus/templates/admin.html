@@ -6,6 +6,31 @@
 <ul>
     {% for user in users %}
     <li>{{user.get_capitalized_name()}}</li>
+<span> There are <strong>{{users|length}}</strong> users registered.</span>
+<h3>Users 2G+</h3>
+<ul>
+    {% for user in users %}
+    {% if user.is_tested and user.is_vaccinated %}
+    <li>{{user.name}}</li>
+    {% endif %}
+    {% endfor %}
+</ul>
+
+<h3>Users only vaccinated</h3>
+<ul>
+    {% for user in users %}
+    {% if user.is_vaccinated %}
+    <li>{{user.name}}</li>
+    {% endif %}
+    {% endfor %}
+</ul>
+
+<h3>Users only tested</h3>
+<ul>
+    {% for user in users %}
+    {% if user.is_tested %}
+    <li>{{user.name}}</li>
+    {% endif %}
     {% endfor %}
 </ul>
 
