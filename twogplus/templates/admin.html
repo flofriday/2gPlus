@@ -14,7 +14,7 @@
 <h3>Users only vaccinated</h3>
 <ul>
     {% for user in users %}
-    {% if user.is_vaccinated %}
+    {% {% if user.is_vaccinated and not user.is_tested %} %}
     <li>{{user.get_capitalized_name()}}</li>
     {% endif %}
     {% endfor %}
@@ -23,7 +23,7 @@
 <h3>Users only tested</h3>
 <ul>
     {% for user in users %}
-    {% if user.is_tested %}
+    {% {% if user.is_tested and not user.is_vaccinated %} %}
     <li>{{user.get_capitalized_name()}}</li>
     {% endif %}
     {% endfor %}
