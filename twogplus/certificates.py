@@ -149,7 +149,7 @@ def verify_vaccinated_cert(file: FileStorage) -> str:
     # Verify the certificate signature
     assert_cert_sign(cose_data)
 
-    # Verify the exiration date is ok for the event
+    # Verify the expiration date is ok for the event
     event_date = date.fromisoformat(app.config["EVENT_DATE"])
     if calc_vaccinated_till(data) < event_date:
         raise Exception(
@@ -203,7 +203,7 @@ def verify_test_cert(file: FileStorage) -> str:
     # Verify the certificate signature
     assert_cert_sign(cose_data)
 
-    # Verify the exiration date is ok for the event
+    # Verify the expiration date is ok for the event
     event_date = datetime.fromisoformat(app.config["EVENT_DATE"])
     event_date += timedelta(hours=(24 + 6))
     time_of_test = datetime.fromisoformat(data[-260][1]["t"][0]["sc"][:-1])
