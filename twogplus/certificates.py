@@ -152,7 +152,9 @@ def verify_vaccinated_cert(file: FileStorage) -> str:
     # Verify the exiration date is ok for the event
     event_date = date.fromisoformat(app.config["EVENT_DATE"])
     if calc_vaccinated_till(data) < event_date:
-        raise Exception(f"Your vaccine will expire before the event at {event_date}")
+        raise Exception(
+            f"Your vaccine will expire before the event at {event_date}"
+        )
 
     # Return the name from the certificate
     return data[-260][1]["nam"]["gnt"] + " " + data[-260][1]["nam"]["fnt"]
@@ -183,17 +185,20 @@ def verify_test_cert(file: FileStorage) -> str:
     # decode cbor
     data = flynn.decoder.loads(cbor_data)
 
-    # Verify that this is a vaccine certificate
+    # Verify that this is a test certificate
     if "t" not in data[-260][1]:
         message = "The certificate must be for a test"
         raise Exception(message)
 
     # Verify the data now
     if COVID_19_ID != data[-260][1]["t"][0]["tg"]:
-        raise Exception("The certificate must be for covid19")
-    # TODO: verify that test was negative
-    # TODO: check if it is PCR
-    print(json.dumps(data))
+        raise Exception("The test must be for covid19")
+    # Verify that test was negative
+    if 260415000 != data[-260][1]["t"][0]["tr"]:
+        raise Exception("The test was not negative")
+    # Verify a pcr test
+    if "nm" not in data[-260][1]["t"][0]:
+        raise Exception("We only allow PCR tests.")
 
     # Verify the certificate signature
     assert_cert_sign(cose_data)
