@@ -194,8 +194,9 @@ def verify_test_cert(file: FileStorage) -> str:
     if COVID_19_ID != data[-260][1]["t"][0]["tg"]:
         raise Exception("The test must be for covid19")
     # Verify that test was negative
-    if 260415000 != data[-260][1]["t"][0]["tr"]:
-        raise Exception("The test was not negative")
+    if "260415000" != data[-260][1]["t"][0]["tr"]:
+        id = data[-260][1]["t"][0]["tr"]
+        raise Exception(f"The test was not negative ({id})")
     # Verify a pcr test
     if "nm" not in data[-260][1]["t"][0]:
         raise Exception("We only allow PCR tests.")
