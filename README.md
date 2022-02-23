@@ -38,10 +38,12 @@ Install the requirements with:
 sudo apt -y install python3-venv python3-pip libzbar0 libxml2-dev libxmlsec1-dev libxmlsec1-openssl poppler-utils
 ```
 
-Create a virtual env with:
+Create a virtual env and install all python dependencies:
 
 ```bash
 python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 ```
 
 Copy `instance/config_example.toml` to `instance/config.toml` and edit all
